@@ -1,6 +1,4 @@
 // netlify/functions/chatgpt.js
-import fetch from "node-fetch";
-
 export async function handler(event, context) {
   try {
     const { message } = JSON.parse(event.body);
@@ -9,10 +7,10 @@ export async function handler(event, context) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`, // use env var
+        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`, // secure env var
       },
       body: JSON.stringify({
-        model: "gpt-4o-mini", // or gpt-5 if you want
+        model: "gpt-4o-mini", // or "gpt-5" if your account allows
         messages: [{ role: "user", content: message }],
       }),
     });
