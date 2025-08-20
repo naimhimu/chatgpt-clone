@@ -20,7 +20,7 @@ function App() {
       const res = await axios.post(
         "https://api.openai.com/v1/chat/completions",
         {
-          model: "gpt-5o-mini", // ChatGPT-style model
+          model: "gpt-4o", // ChatGPT-style model
           messages: newMessages,
         },
         {
