@@ -44,10 +44,15 @@ function App() {
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {messages.map((msg, i) => (
-          <div
-            key={i}
-            className={`p-3 rounded-2xl max-w-xl ${
-              msg.role === "user"
-                ? "bg-green-500 text-white ml-auto"
-                : "bg-white text-gray-90
+     {messages.map((msg, i) => (
+  <div
+    key={i}
+    className={`p-3 rounded-2xl max-w-xl ${
+      msg.role === "user"
+        ? "bg-green-500 text-white ml-auto"
+        : "bg-white text-gray-900 mr-auto shadow"
+    }`}
+  >
+    {msg.content}
+  </div>
+))}
