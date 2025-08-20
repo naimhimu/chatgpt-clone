@@ -1,70 +1,34 @@
 import React, { useState } from 'react';
+import ChatInput from './ChatInput';
 
-function ChatInput({ onSend }) {
-  const [message, setMessage] = useState('');
-  const [file, setFile] = useState(null);
+function App() {
+  const [messages, setMessages] = useState([]);
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-  };
-
-  const handleSend = () => {
-    if (!message && !file) return; // prevent empty sends
-    onSend({ message, file });
-    setMessage('');
-    setFile(null);
+  const handleSend = ({ message, file }) => {
+    // Example: add the new message (and file if any) to state
+    setMessages((prev) => [
+      ...prev,
+      { id: Date.now(), text: message, file },
+    ]);
+    // TODO: call your Netlify Functions here
   };
 
   return (
-    <div style={{
-      display: 'flex',
-      alignItems: 'center',
-      padding: '10px',
-      borderTop: '1px solid #ccc',
-      backgroundColor: '#f9f9f9'
-    }}>
-      {/* Upload Button */}
-      <label style={{ cursor: 'pointer', marginRight: '10px' }}>
-        <span style={{ fontSize: '24px' }}>➕</span>
-        <input
-          type="file"
-          style={{ display: 'none' }}
-          onChange={handleFileChange}
-        />
-      </label>
+    <div className="flex flex-col h-screen bg-gray-50">
+      {/* Message list */}
+      <div className="flex-grow overflow-auto p-4 space-y-2">
+        {messages.map((msg) => (
+          <div key={msg.id} className="bg-white p-3 rounded shadow-sm">
+            <p>{msg.text}</p>
+            {msg.file && <small className="text-gray-500">{msg.file.name}</small>}
+          </div>
+        ))}
+      </div>
 
-      {/* Text Input */}
-      <input
-        type="text"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        placeholder="Type your message or essay..."
-        style={{
-          flex: 1,
-          padding: '8px 12px',
-          borderRadius: '20px',
-          border: '1px solid #ccc',
-          outline: 'none'
-        }}
-      />
-
-      {/* Send Button */}
-      <button
-        onClick={handleSend}
-        style={{
-          marginLeft: '10px',
-          padding: '8px 16px',
-          borderRadius: '20px',
-          backgroundColor: '#007bff',
-          color: '#fff',
-          border: 'none',
-          cursor: 'pointer'
-        }}
-      >
-        Send
-      </button>
+      {/* Chat input */}
+      <ChatInput onSend={handleSend} />
     </div>
   );
 }
 
-export default ChatInput;
+export default App;
