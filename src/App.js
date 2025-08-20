@@ -2,7 +2,7 @@ import React, { useState } from "react"; import axios from "axios";
 
 // Components function Header() { return ( <div className="bg-gray-800 text-white p-4 text-lg font-bold"> IELTSwithNayeem </div> ); }
 
-function ChatBox({ messages, sendMessage, input, setInput, loading }) { return ( <div className="flex-1 overflow-y-auto p-4 space-y-4"> {messages.map((msg, i) => ( <div key={i} className={p-3 rounded-2xl max-w-xl ${             msg.role === "user"               ? "bg-green-500 text-white ml-auto"               : "bg-white text-gray-900 mr-auto shadow"           }} > {msg.content} </div> ))} {loading && <p className="text-gray-500">Typing...</p>} </div> ); }
+function ChatBox({ messages, loading }) { return ( <div className="flex-1 overflow-y-auto p-4 space-y-4"> {messages.map((msg, i) => ( <div key={i} className={p-3 rounded-2xl max-w-xl ${             msg.role === "user"               ? "bg-green-500 text-white ml-auto"               : "bg-white text-gray-900 mr-auto shadow"           }} > {msg.content} </div> ))} {loading && <p className="text-gray-500">Typing...</p>} </div> ); }
 
 function InputBox({ input, setInput, sendMessage }) { return ( <div className="p-4 bg-white border-t flex mt-4"> <input className="flex-1 border rounded-lg p-2 mr-2" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Type your message..." onKeyDown={(e) => e.key === "Enter" && sendMessage()} /> <button onClick={sendMessage} className="bg-green-500 text-white px-4 py-2 rounded-lg" > Send </button> </div> ); }
 
@@ -50,6 +50,6 @@ setLoading(false);
 
 };
 
-return ( <div className="flex flex-col h-screen bg-gray-100"> <Header /> <div className="flex flex-1 flex-col md:flex-row"> <div className="flex-1 md:w-2/3"> <ChatBox messages={messages} sendMessage={sendMessage} input={input} setInput={setInput} loading={loading} /> <InputBox input={input} setInput={setInput} sendMessage={sendMessage} /> </div> <div className="md:w-1/3 border-l"> <FileUpload /> </div> </div> </div> ); }
+return ( <div className="flex flex-col h-screen bg-gray-100"> <Header /> <div className="flex flex-1 flex-col md:flex-row"> <div className="flex-1 md:w-2/3"> <ChatBox messages={messages} loading={loading} /> <InputBox input={input} setInput={setInput} sendMessage={sendMessage} /> </div> <div className="md:w-1/3 border-l"> <FileUpload /> </div> </div> </div> ); }
 
 export default App;
