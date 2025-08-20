@@ -8,41 +8,31 @@ function App() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const sendMessage = async () => {
-    if (!input.trim()) return;
+const sendMessage = async () => {
+  if (!input.trim()) return;
 
-    const newMessages = [...messages, { role: "user", content: input }];
-    setMessages(newMessages);
-    setInput("");
-    setLoading(true);
+  const newMessages = [...messages, { role: "user", content: input }];
+  setMessages(newMessages);
+  setInput("");
+  setLoading(true);
 
-    try {
-      const res = await axios.post(
-        "https://api.openai.com/v1/chat/completions",
-        {
-          model: "gpt-4o", // ChatGPT-style model
-          messages: newMessages,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${process.env.REACT_APP_OPENAI_KEY}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+  try {
+    const res = await axios.post("/.netlify/functions/chatgpt", {
+      messages: newMessages,
+    });
 
-      const reply = res.data.choices[0].message.content;
-      setMessages([...newMessages, { role: "assistant", content: reply }]);
-    } catch (err) {
-      console.error(err);
-      setMessages([
-        ...newMessages,
-        { role: "assistant", content: "❌ Error fetching response" },
-      ]);
-    }
-    setLoading(false);
-  };
-
+    const reply = res.data.reply;
+    setMessages([...newMessages, { role: "assistant", content: reply }]);
+  } catch (err) {
+    console.error(err);
+    setMessages([
+      ...newMessages,
+      { role: "assistant", content: "❌ Error fetching response" },
+    ]);
+  }
+  setLoading(false);
+};
+  
   return (
     <div className="flex flex-col h-screen bg-gray-100">
       {/* Header */}
