@@ -36,11 +36,9 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-100">
-      {/* Header */}
-      <div className="bg-gray-800 text-white p-4 text-lg font-bold">
-        ChatGPT Clone
-      </div>
+    <div className="bg-gray-800 text-white p-4 text-lg font-bold">
+  IELTSwithNayeem
+</div>
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
